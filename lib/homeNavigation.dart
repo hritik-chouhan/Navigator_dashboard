@@ -28,10 +28,7 @@ class HomeNavigation extends ConsumerWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     TextEditingController _startPointController = TextEditingController();
 
-  // Future<dynamic> _acquireCurrentPosition() async {
-  //   Position position = await determinePosition();
-  //   return LatLng(position.latitude, position.longitude);
-  // }
+
   final String mapboxToken = 'pk.eyJ1IjoiaHJpdGlrMzk2MSIsImEiOiJjbDRpZjJoZmEwbmt2M2JwOTR0ZmxqamVpIn0.j7hMYKw95zKarr69MMtfcA';
   late MapboxMapController mapController;
 
@@ -45,7 +42,7 @@ class HomeNavigation extends ConsumerWidget {
   Widget build(BuildContext context,  ref) {
 
     // TODO: implement build
-    var Position = ref.read(currlnglatProvider);
+    var Position = ref.watch(currlnglatProvider);
     print(Position);
     String CurrrentAddress = ref.watch(CurrentAdressProvider);
     _addSourceAndLineLayer( Map geometry,bool removeLayer) async {
@@ -53,8 +50,7 @@ class HomeNavigation extends ConsumerWidget {
       mapController.animateCamera(
           CameraUpdate.newCameraPosition(CameraPosition(target: ref.read(destinationlnglatProvider))));
 
-          // Add a polyLine between source and destination
-          // Map geometry = getGeometryFromSharedPrefs(carouselData[index]['index']);
+
       final _fills = {
         "type": "FeatureCollection",
         "features": [
@@ -91,13 +87,12 @@ class HomeNavigation extends ConsumerWidget {
     _onStyleLoadedCallback() async {
       mapController.addSymbol(
           SymbolOptions(
-            geometry: ref.read(destinationlnglatProvider),
+            geometry: ref.watch(destinationlnglatProvider),
             iconSize: 0.2,
             iconImage: 'img.png',
           ),
         );
       
-      // _addSourceAndLineLayer(0, false);
     }
 
     return Scaffold(
@@ -154,7 +149,7 @@ class HomeNavigation extends ConsumerWidget {
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: const [
-                                  Text('Where do you wanna go today?'),
+                                  Text('Directions-find best routes'),
                                 ])),
                       ]),
                 ),
@@ -180,7 +175,7 @@ class HomeNavigation extends ConsumerWidget {
                       // target: LatLng(51.5160895, -0.1294527),
                       target: ref.read(currlnglatProvider) as dynamic,
                       tilt: 30.0,
-                      zoom: 17.0,
+                      zoom: 15.0,
                     ),
                   ),
                 );

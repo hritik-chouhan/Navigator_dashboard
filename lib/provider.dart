@@ -12,7 +12,7 @@ final currlnglatProvider = StateNotifierProvider<currentLngLat,LatLng>(
 
 class currentLngLat extends StateNotifier<LatLng>{
     currentLngLat() : super(
-            LatLng(0,0),
+            LatLng(48.143724,11.576278),
         );
     Future<void> update(value) async{
 

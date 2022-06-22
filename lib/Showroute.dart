@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:navigator2/Bottom_detail_card.dart';
 import 'package:navigator2/provider.dart';
 
 class showRoute extends StatefulWidget {
   final Map RouteResponse;
   final LatLng currlatlng;
-  const showRoute({Key? key,required this.RouteResponse, required this.currlatlng}) : super(key: key);
+  final ref;
+
+  const showRoute({Key? key,required this.ref
+    ,required this.RouteResponse, required this.currlatlng}) : super(key: key);
 
   @override
   _showRouteState createState() => _showRouteState();
@@ -30,7 +34,7 @@ class _showRouteState extends State<showRoute> {
 
     // initialise initialCameraPosition, address and trip end points
     _initialCameraPosition = CameraPosition(
-        target: widget.currlatlng, zoom: 11);
+        target: widget.currlatlng, zoom: 7);
 
     // for (String type in ['source', 'destination']) {
     //   _kTripEndPoints
@@ -42,6 +46,7 @@ class _showRouteState extends State<showRoute> {
   _initialiseDirectionsResponse() {
     distance = (widget.RouteResponse['distance'] / 1000).toStringAsFixed(1);
     geometry = widget.RouteResponse['geometry'];
+    dropOffTime = widget.RouteResponse['dropOffTime'];
   }
 
   _onMapCreated(MapboxMapController controller) async {
@@ -99,7 +104,7 @@ class _showRouteState extends State<showRoute> {
               Navigator.of(context).pop();
             },
             icon: const Icon(Icons.arrow_back)),
-        title: const Text('Review Ride'),
+        title: const Text('Route for your destination'),
       ),
       body: SafeArea(
         child: Stack(
@@ -112,7 +117,7 @@ class _showRouteState extends State<showRoute> {
                 onMapCreated: _onMapCreated,
                 onStyleLoadedCallback: _onStyleLoadedCallback,
                 myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
-                minMaxZoomPreference: const MinMaxZoomPreference(5, 16),
+                minMaxZoomPreference: const MinMaxZoomPreference(0, 16),
                 scrollGesturesEnabled: true,
                 rotateGesturesEnabled: true,
                 zoomGesturesEnabled: true,
@@ -122,7 +127,7 @@ class _showRouteState extends State<showRoute> {
                 myLocationEnabled: true,
               ),
             ),
-            // reviewRideBottomSheet(context, distance, dropOffTime),
+            bottomDetailCard(context, widget.ref, distance, dropOffTime),
           ],
         ),
       ),

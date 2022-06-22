@@ -30,7 +30,7 @@ Future<Map> getDirectionsAPIResponse(LatLng currentLatLng,LatLng destiLatLng) as
   print(currentLatLng);
   print(destiLatLng);
   final response = await getdrivingRouteUsingMapbox(currentLatLng, destiLatLng);
-  print(response);
+  // print(response);
   Map geometry = response['routes'][0]['geometry'];
   num duration = response['routes'][0]['duration'];
   num distance = response['routes'][0]['distance'];

@@ -27,6 +27,8 @@ class Direction extends ConsumerWidget {
     return Scaffold(
       key: _scaffoldKey,
       body: Card(
+
+        elevation: 5,
         // width: MediaQuery.of(context).size.width,
         // height: MediaQuery.of(context).size.height*0.1,
         child: Column(
@@ -97,15 +99,16 @@ class Direction extends ConsumerWidget {
             LatLng destination = ref.read(destinationlnglatProvider);
             Map RouteResponse = await getDirectionsAPIResponse(current,destination);
             print(RouteResponse);
+
             Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (_) =>
-                        showRoute(RouteResponse: RouteResponse,currlatlng: current)));
+                        showRoute(RouteResponse: RouteResponse,currlatlng: current,ref: ref)));
             // _addSourceAndLineLayer(RouteResponse['geometry'], true);
           },
           label: const Text('Show Route'),
-          icon: const Icon(Icons.drive_eta),
+          icon: const Icon(Icons.drive_eta_rounded),
       ),
     );
   }
@@ -133,7 +136,7 @@ class SearchPage extends ConsumerWidget {
         child: MapBoxPlaceSearchWidget(
           popOnSelect: false,
           apiKey: 'pk.eyJ1IjoiaHJpdGlrMzk2MSIsImEiOiJjbDRpZjJoZmEwbmt2M2JwOTR0ZmxqamVpIn0.j7hMYKw95zKarr69MMtfcA',
-          searchHint: 'Search around',
+          searchHint: 'Search around your place',
           onSelected: (place) async{
             var url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/${place.placeName}.json?proximity=ip&types=place%2Cpostcode%2Caddress&access_token=pk.eyJ1IjoiaHJpdGlrMzk2MSIsImEiOiJjbDRpZjJoZmEwbmt2M2JwOTR0ZmxqamVpIn0.j7hMYKw95zKarr69MMtfcA';
             http.Response response = await http.get(Uri.parse(url));
