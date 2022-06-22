@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Replace "343254889799245" with your Facebook App ID here. -->
+<!--    <string name="facebook_app_id">343254889799245</string>-->
+    <string name="access_token" translatable="false">'pk.eyJ1IjoiaHJpdGlrMzk2MSIsImEiOiJjbDRpZjJoZmEwbmt2M2JwOTR0ZmxqamVpIn0.j7hMYKw95zKarr69MMtfcA'</string>
+</resources>
